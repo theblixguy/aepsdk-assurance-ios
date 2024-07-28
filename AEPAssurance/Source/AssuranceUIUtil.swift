@@ -27,7 +27,11 @@ class AssuranceUIUtil {
                 return
             }
 
+            #if os(visionOS)
+            let scale: CGFloat = 1.0
+            #else
             let scale = UIScreen.main.scale
+            #endif
             UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale)
             guard let context = UIGraphicsGetCurrentContext() else {
                 callback(nil)
@@ -44,6 +48,10 @@ class AssuranceUIUtil {
 
 internal extension UIApplication {
     func assuranceGetKeyWindow() -> UIWindow? {
+        #if os(visionOS)
+        windows.first
+        #else
         keyWindow ?? windows.first
+        #endif
     }
 }
